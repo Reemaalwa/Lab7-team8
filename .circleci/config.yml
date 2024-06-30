@@ -4,14 +4,14 @@ jobs:
   build:
     working_directory: ~/Lab7-team8
     docker:
-      - image: circleci/android:api-28-alpha
+      - image: circleci/openjdk:11.0.2-jdk-stretch  # Using Java 11
     environment:
       JVM_OPTS: -Xmx3200m
     steps:
       - checkout
 
       - restore_cache:
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
 
       - run:
           name: Chmod permissions
@@ -24,7 +24,7 @@ jobs:
       - save_cache:
           paths:
             - ~/.gradle
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
 
       - run:
           name: Run Unit Tests
